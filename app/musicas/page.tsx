@@ -83,7 +83,7 @@ export default function MusicasPage(){
         </div>
         <div className="flex flex-row gap-2">
           <label htmlFor="link_youtube" className="text-white">Link do Youtube:</label>
-          <input onChange={(e)=>setLinkYoutubeMusica(e.target.value)} value={linkYoutubeMusica} name="link_youtube" id="link_youtube" type="text" className="border border-x-cyan-50 rounded-lg bg-[#ccc] text-[#4a45cd]"/>
+          <input onChange={(e)=>setLinkYoutubeMusica(e.target.value)} value={linkYoutubeMusica} name="link_youtube" id="link_youtube" type="text" className="border border-x-cyan-50 rounded-lg bg-[#ccc] text-[#4a45cd] required"/>
         </div>
         <button type="submit" className="text-white bg-[#7f36b0] p-2 rounded-xl shadow-sm shadow-[#000]">
           Cadastrar Música
