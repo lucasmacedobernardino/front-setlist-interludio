@@ -12,6 +12,7 @@ export default function MusicasPage(){
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [nomeMusica, setNomeMusica] = useState('');
   const [nomeArtista, setNomeArtista] = useState('');
+  const [showMessage, setShowMessage] = useState(false);
   const [linkYoutubeMusica, setLinkYoutubeMusica] = useState('');
   const [fkMusicaCategoria, setFkMusicaCategoria] = useState('');
   const [message, setMessage] = useState('');
@@ -25,23 +26,31 @@ export default function MusicasPage(){
       const response = await instance.get<Categoria[]>("categoria");
       setCategorias(response.data);
     } catch (error) {
-      console.log(error);
     }
   }
 
+  function mostrarMensagem(){
+    setShowMessage(true)
+    console.log("AQUI")
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 2000); 
+  }
   async function postMusica(e: React.FormEvent) {
     e.preventDefault();
     try {
-      const response = await instance.post("musica", {
+      await instance.post("musica", {
         nome_musica: nomeMusica,
         nome_artista: nomeArtista,
         link_youtube_musica: linkYoutubeMusica,
         fk_musica_categoria: parseInt(fkMusicaCategoria, 10)
       });
       setMessage("Música cadastrada com sucesso!");
+      mostrarMensagem()
     } catch (error: any) {
-      if (error.response) {
+      if (error) {
         setMessage(error.response.data.error || "Erro ao cadastrar música. Tente novamente.");
+        mostrarMensagem()
       } else {
         setMessage("Erro ao cadastrar música. Tente novamente.");
       }
@@ -57,8 +66,8 @@ export default function MusicasPage(){
           </Link>
           <h1 className="text-3xl font-bold text-white">Cadastro e Seleção de Músicas</h1>
         </div>
-        {message && (
-          <div className={`p-2 rounded-md ${message.includes('sucesso') ? 'bg-green-500' : 'bg-red-500'}`}>
+        {showMessage && (
+          <div className={`p-2 rounded-md ${message.includes('sucesso') ? 'bg-green-500' : 'bg-red-500'} fade-in`}>
             <p className="text-white">{message}</p>
           </div>
         )}
